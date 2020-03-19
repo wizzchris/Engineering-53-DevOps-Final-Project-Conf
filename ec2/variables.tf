@@ -15,7 +15,7 @@ variable "subnets" {
 }
 
 
-# variable "user_data" {
-#   description=""
-#   default=""
-# }
+variable "user_data" {
+  description=""
+  default=""
+}

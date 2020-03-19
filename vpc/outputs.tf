@@ -13,15 +13,3 @@ output "aws_vpc_id" {
 output "aws_internet_gateway" {
   value = "${aws_internet_gateway.gw.id}"
 }
-
-output "subnet01" {
-  value = "${element(aws_subnet.public_subnet.*.id, 1)}"
-}
-
-output "subnet02" {
-  value = "${element(aws_subnet.public_subnet.*.id, 2)}"
-}
-
-output "subnet03" {
-  value = "${element(aws_subnet.public_subnet.*.id, 3)}"
-}
