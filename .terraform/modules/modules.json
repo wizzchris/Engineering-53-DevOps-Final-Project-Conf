@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"vpc","Source":"./vpc","Dir":"vpc"},{"Key":"","Source":"","Dir":"."},{"Key":"ec2","Source":"./ec2","Dir":"ec2"},{"Key":"Autoscaling","Source":"./Autoscaling","Dir":"Autoscaling"}]}
