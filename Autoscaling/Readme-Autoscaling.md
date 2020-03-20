@@ -12,8 +12,8 @@ resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
   associate_public_ip_address = true
   user_data = "${var.user_data}"
 ````
-user_data interpolates from the scripts/app/init.sh.tpl template file to install and start npm.
+user_data interpolates from the scripts/app/init.sh.tpl template file to install and start npm (starts web server).
 
 *Note:* You can specify your launch configuration with different multiple Auto scaling group, However you can only specify one launch configuration for a auto scaling group one at a time, and you cannot modify the launch configuration after you have created it.
 
-#### Autoscaling group 
+#### Autoscaling group
