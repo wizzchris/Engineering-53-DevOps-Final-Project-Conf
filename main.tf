@@ -23,6 +23,7 @@ module "ec2" {
   user_data = "${data.template_file.app_init.rendered}"
 }
 
+
 module "Autoscaling" {
   source         = "./Autoscaling"
   instance_type  = "t2.micro"
