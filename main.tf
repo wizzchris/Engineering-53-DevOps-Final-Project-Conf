@@ -32,6 +32,7 @@ module "ec2" {
   security_group = "${module.vpc.security_group}"
   subnets        = "hamza-jason-private-subnet.1"
   app_ami_id     = "ami-02e24fbcca656fe37"
+  private_ip     = '10.0.10.2'
   user_data = "${data.template_file.db_init.rendered}"
 }
 #load the init template
@@ -44,6 +45,7 @@ module "ec2" {
   security_group = "${module.vpc.security_group}"
   subnets        = "hamza-jason-private-subnet.2"
   app_ami_id     = "ami-02e24fbcca656fe37"
+  private_ip     = '10.0.11.2'
   user_data = "${data.template_file.db2_init.rendered}"
 }
 #load the init template
@@ -56,6 +58,7 @@ module "ec2" {
   security_group = "${module.vpc.security_group}"
   subnets        = "hamza-jason-private-subnet.3"
   app_ami_id     = "ami-02e24fbcca656fe37"
+  private_ip     = '10.0.12.2'
   user_data = "${data.template_file.db2_init.rendered}"
 }
 
