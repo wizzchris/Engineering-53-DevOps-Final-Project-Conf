@@ -38,4 +38,4 @@ override.tf.json
 
 .idea/
 venv/
-.terraform
+.terraform/
