@@ -8,7 +8,7 @@ resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
   instance_type         = "${var.instance_type}"
   security_groups = ["${aws_security_group.launch-config-asg-sg.id}"]
   associate_public_ip_address = true
-  user_data = "${var.user_data}"
+  user_data = "${var.user_data_app}"
 }
 
 #["${element(aws_subnet.public_subnet.id), 0-2}"]

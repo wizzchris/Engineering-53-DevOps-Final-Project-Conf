@@ -12,7 +12,13 @@ variable "subnets" {
   type = "list"
 }
 
-variable "user_data" {
+# variable "subnet01" {}
+# variable "subnet02" {}
+# variable "subnet03" {}
+
+
+
+variable "user_data_app" {
   description=""
   default=""
 }
