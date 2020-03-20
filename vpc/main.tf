@@ -38,14 +38,14 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
-# Private Route table
-# resource "aws_default_route_table" "private_route_table" {
+ #Private Route table
+ #resource "aws_default_route_table" "private_route_table" {
 #   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
 #
 #   tags = {
 #     Name = "hamza-jason-Eng53-private-route-table"
 #   }
-# }
+ #}
 
 
 # Create Public subnet
@@ -62,17 +62,17 @@ resource "aws_subnet" "public_subnet" {
 }
 
 # Create private subnet
-# resource "aws_subnet" "public_subnet" {
-#   count = 3 # <= if you change the count, make sure to change the cidrs in variable file
-#   cidr_block = "${var.private_cidrs[count.index]}"
-#   vpc_id = "${aws_vpc.main.id}"
-#   map_public_ip_on_launch = true
-#   availability_zone = "${data.aws_availability_zone.zone_available.names[count.index]}"
-#
-#   tags = {
-#     Name = "hamza-jason-private-subnet.${count.index + 1}"
-#   }
-# }
+ resource "aws_subnet" "private_subnet" {
+   count = 3 # <= if you change the count, make sure to change the cidrs in variable file
+   cidr_block = "${var.private_cidrs[count.index]}"
+   vpc_id = "${aws_vpc.main.id}"
+   map_public_ip_on_launch = false
+   availability_zone = "${data.aws_availability_zone.zone_available.names[count.index]}"
+
+   tags = {
+     Name = "hamza-jason-private-subnet.${count.index + 1}"
+   }
+ }
 
 
 # Associate Public Subnet with Public Route table
@@ -84,12 +84,12 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 }
 
 # Associate Public Subnet with Public Route table
-# resource "aws_route_table_association" "private_subnet_assoc" {
-#   count = 3
-#   route_table_id = "${aws_default_route_table.private_route_table.id}"
-#   subnet_id = "${aws.subnet.private_subnet.*.id[count.index]}"
-#   depends_on = ["aws_default_route_table.private_route_table", "aws_subnet.private_subnet"]
-# }
+ resource "aws_route_table_association" "private_subnet_assoc" {
+   count = 3
+   route_table_id = "${aws_default_route_table.public_route_table.id}"
+   subnet_id = "${aws.subnet.private_subnet.*.id[count.index]}"
+   depends_on = ["aws_default_route_table.public_route_table", "aws_subnet.private_subnet"]
+ }
 
 
 # Create Security Group
