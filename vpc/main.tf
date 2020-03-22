@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
   cidr_block = "${var.vpc_cidr}"
 
   tags = {
-    Name = "hamza-jason-Eng53-vpc"
+    Name = "hamza-jason-Eng53-New-vpc"
   }
 }
 
@@ -60,10 +60,11 @@ resource "aws_subnet" "public_subnet" {
 
 #Create private subnet
  resource "aws_subnet" "private_subnet" {
-   count = 3 # <= if you change the count, make sure to change the cidrs in variable file
-   cidr_block = "${var.private_cidrs[count.index]}"
-   vpc_id = "${aws_vpc.main.id}"
-   availability_zone = "${data.aws_availability_zones.zone_available.names[count.index]}"
+   count              = 3 # <= if you change the count, make sure to change the cidrs in variable file
+   cidr_block         = "${var.private_cidrs[count.index]}"
+   vpc_id             = "${aws_vpc.main.id}"
+   map_public_ip_on_launch = false
+   availability_zone  = "${data.aws_availability_zones.zone_available.names[count.index]}"
 
    tags = {
      Name = "hamza-jason-private-subnet.${count.index + 1}"

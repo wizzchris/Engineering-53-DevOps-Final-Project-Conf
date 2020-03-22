@@ -1,3 +1,4 @@
+
 provider "aws" {
   region = "eu-west-1"
 }
@@ -5,31 +6,16 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 resource "aws_instance" "db_primary" {
-  count                       = 1
+  count                       = 3
   ami                         = "${var.app_ami_id}"
   instance_type               = "${var.instance_type}"
   # key_name                    = "${aws_key_pair.my-key.id}"
   vpc_security_group_ids      = ["${var.security_group}"]
-  subnet_id                   = "${element(var.subnets, count.index)}"
-  associate_public_ip_address = true
-  user_data = "${var.user_data_pr}"
+  subnet_id                   = "${element(var.private_subnets, count.index)}"
+  associate_public_ip_address = false
+  user_data                   = "${var.user_data_pr}"
 
   tags = {
     Name = "hamza-jason-Eng53-db_primary-${count.index + 1}"
-  }
-}
-
-resource "aws_instance" "db_secondary" {
-  count                       = 1
-  ami                         = "${var.app_ami_id}"
-  instance_type               = "${var.instance_type}"
-  # key_name                    = "${aws_key_pair.my-key.id}"
-  vpc_security_group_ids      = ["${var.security_group}"]
-  subnet_id                   = "${element(var.subnets, count.index)}"
-  associate_public_ip_address = true
-  user_data = "${var.user_data_sd}"
-
-  tags = {
-    Name = "hamza-jason-Eng53-db_secondary-${count.index + 1}"
   }
 }
