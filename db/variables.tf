@@ -10,7 +10,8 @@ variable "instance_type" {}
 
 variable "security_group" {}
 
-variable "subnets" {
+
+variable "private_subnets" {
   type = "list"
 }
 
