@@ -27,10 +27,10 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.main.id}"
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.gw.id}"
-  }
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = "${aws_internet_gateway.gw.id}"
+  # }
   tags = {
     Name = "hamza-jason-Eng53-public-route-table"
   }
@@ -40,11 +40,26 @@ resource "aws_route_table" "public_route_table" {
  resource "aws_default_route_table" "private_route_table" {
   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
 
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
   tags = {
     Name = "hamza-jason-Eng53-private-route-table"
   }
  }
 
+ # Create Public subnet Kibana
+ resource "aws_subnet" "public_subnet_elk" {
+   count                   = 1 # <= if you change the count, make sure to change the cidrs in variable file
+   cidr_block              = "${var.public_cidrs_elk[count.index]}"
+   vpc_id                  = "${aws_vpc.main.id}"
+   availability_zone       = "${data.aws_availability_zones.zone_available.names[count.index]}"
+
+   tags = {
+     Name = "hamza-jason-public-subnet-elk.${count.index + 1}"
+   }
+ }
 # Create Public subnet
 resource "aws_subnet" "public_subnet" {
   count                   = 3 # <= if you change the count, make sure to change the cidrs in variable file
@@ -57,6 +72,7 @@ resource "aws_subnet" "public_subnet" {
     Name = "hamza-jason-public-subnet.${count.index + 1}"
   }
 }
+
 
 #Create private subnet
  resource "aws_subnet" "private_subnet" {
@@ -111,6 +127,21 @@ resource "aws_security_group_rule" "http_inbound_access" {
   to_port           = 80
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
+}
+
+# All outbound access
+resource "aws_security_group_rule" "all_outbound_access" {
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg.id}"
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group" "sg-elk" {
+  name   = "hamza-jason-Eng53-sg-elk"
+  vpc_id = "${aws_vpc.main.id}"
 }
 
 # All outbound access
