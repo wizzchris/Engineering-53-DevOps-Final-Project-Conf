@@ -8,3 +8,7 @@ variable "public_cidrs" {
 variable "private_cidrs" {
   type    = "list"
 }
+
+variable "public_cidrs_elk" {
+  type = "list"
+}

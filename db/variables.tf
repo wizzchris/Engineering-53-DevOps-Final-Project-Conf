@@ -1,5 +1,5 @@
-variable "app_ami_id" {
-  default="ami-02e24fbcca656fe37"
+variable "db_ami_id" {
+  default="ami-01793b684af7a3e2c"
 }
 
 # variable "my_public_key" {
