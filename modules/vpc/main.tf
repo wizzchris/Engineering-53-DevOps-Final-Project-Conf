@@ -103,53 +103,126 @@ resource "aws_route_table_association" "public_subnet_assoc" {
    depends_on = ["aws_default_route_table.private_route_table", "aws_subnet.private_subnet"]
  }
 
+########################################################
+
+## SG for DB
 
 # Create Security Group
-resource "aws_security_group" "sg" {
-  name   = "hamza-jason-Eng53-sg"
+resource "aws_security_group" "sg_db" {
+  name   = "hamza-jason-Eng53-sg-db"
   vpc_id = "${aws_vpc.main.id}"
 }
 
 # Ingress Security Group Port 22
-resource "aws_security_group_rule" "ssh_inbound_access" {
-  from_port         = 22
+# resource "aws_security_group_rule" "ssh_inbound_access" {  ########## at end remove !!!!!!!!!
+#   from_port         = 22
+#   protocol          = "tcp"
+#   security_group_id = "${aws_security_group.sg_db.id}"
+#   to_port           = 22
+#   type              = "ingress"
+#   cidr_blocks       = ["0.0.0.0/0"]
+# }
+
+# resource "aws_security_group_rule" "http_inbound_access" {
+#   from_port         = 80
+#   protocol          = "tcp"
+#   security_group_id = "${aws_security_group.sg_db.id}"
+#   to_port           = 80
+#   type              = "ingress"
+#   cidr_blocks       = ["0.0.0.0/0"]
+# }
+
+resource "aws_security_group_rule" "mongod_inbound_access" {
+  from_port         = 27017
   protocol          = "tcp"
-  security_group_id = "${aws_security_group.sg.id}"
-  to_port           = 22
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 27017
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "http_inbound_access" {
-  from_port         = 80
-  protocol          = "tcp"
-  security_group_id = "${aws_security_group.sg.id}"
-  to_port           = 80
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-}
-
-# All outbound access
-resource "aws_security_group_rule" "all_outbound_access" {
+#All outbound access
+resource "aws_security_group_rule" "mongo_all_outbound_access" {
   from_port         = 0
   protocol          = "-1"
-  security_group_id = "${aws_security_group.sg.id}"
+  security_group_id = "${aws_security_group.sg_db.id}"
   to_port           = 0
   type              = "egress"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = ["10.0.0.0/16"]
 }
 
-resource "aws_security_group" "sg-elk" {
-  name   = "hamza-jason-Eng53-sg-elk"
+########################################################
+
+#### SG for elasticsearch and logstack
+
+resource "aws_security_group" "sg_el" {
+  name   = "hamza-jason-Eng53-sg_el"
   vpc_id = "${aws_vpc.main.id}"
 }
 
-# All outbound access
-resource "aws_security_group_rule" "all_outbound_access" {
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = "${aws_security_group.sg.id}"
-  to_port           = 0
-  type              = "egress"
-  cidr_blocks       = ["0.0.0.0/0"]
+resource "aws_security_group_rule" "el_eph_inbound_access" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_el.id}"
+  to_port           = 65535
+  type              = "ingress"
+  cidr_blocks       = ["10.0.0.0/16"]
 }
+
+resource "aws_security_group_rule" "el_eph_outbound_access" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_el.id}"
+  to_port           = 65535
+  type              = "egress"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+############################################################
+
+#### SG for Kibana
+
+resource "aws_security_group" "sg_k" {
+  name   = "hamza-jason-Eng53-sg-k"
+  vpc_id = "${aws_vpc.main.id}"
+}
+
+resource "aws_security_group_rule" "k_eph_inbound_access" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_k.id}"
+  to_port           = 65535
+  type              = "ingress"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+#All inbound access
+resource "aws_security_group_rule" "k_all_inbound_access" {
+  from_port         = 1024
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_k.id}"
+  to_port           = 65535
+  type              = "ingress"
+  cidr_blocks       = ["188.213.137.212/32"]
+}
+
+resource "aws_security_group_rule" "k_eph_outbound_access" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_k.id}"
+  to_port           = 65535
+  type              = "egress"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+#All outbound access
+resource "aws_security_group_rule" "k_all_outbound_access" {
+  from_port         = 1024
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_k.id}"
+  to_port           = 65535
+  type              = "egress"
+  cidr_blocks       = ["188.213.137.212/32"]
+}
+
+############################################################

@@ -4,5 +4,4 @@ variable "subnets" {
   type = "list"
 }
 
-
 variable "asg" {}
