@@ -1,7 +1,7 @@
 # READ ME OVERVIEW
 
 ## Overview 
-
+You need to ensure terrarform is installed.
 This repository contains the terrarform code that will allow the user to run the command
 
 ````
