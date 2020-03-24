@@ -42,9 +42,9 @@ db filebeat/metric = https://github.com/chpoullet/beats-db-cookbook
 
 ## Diagrams 
 
-This diagram shows the arcitecture we have created:
+This diagram shows the architecture we have created:
 
-This diagram shows the Piplines we have created:
+This diagram shows the pipelines we have created:
 
 
 
