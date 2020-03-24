@@ -30,6 +30,16 @@ terraform validate
 ````
 We have also created jenkins jobs that creates images of the ELK stack. The repositories of each of the parks of the ELK stack are below.
 
+elastic = https://github.com/chpoullet/eng53-elasticsearch-cookbook
+
+kibana = https://github.com/chpoullet/eng53-kibana-cookbook
+
+logstash = https://github.com/chpoullet/eng53-logstash-cookbook
+
+app filebeat/metric = https://github.com/chpoullet/beats-app-cookbook
+
+db filebeat/metric = https://github.com/chpoullet/beats-db-cookbook
+
 ## Diagrams 
 
 This diagram shows the arcitecture we have created:
