@@ -4,7 +4,7 @@ You need to ensure terrarform is installed.
 This repository contains the terrarform code that will allow the user to run the command
 
 ````
-terrarform apply
+terraform apply
 ````
 
 This will create the environment for the app and database along with the security groups and vpcs required. They are spred acorss 3 availability zones.
@@ -24,7 +24,7 @@ https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
 We have done the same for this repository, the code is tested in jenkins by doing these comands 
 ````
-terrarform init
+terraform init
 terraform validate
 ````
 We have also created jenkins jobs that creates images of the ELK stack. The repositories of each of the parks of the ELK stack are below.
