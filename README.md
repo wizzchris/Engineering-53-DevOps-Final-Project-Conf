@@ -1,4 +1,7 @@
 # READ ME OVERVIEW
+
+## Overview 
+
 This repository contains the terrarform code that will allow the user to run the command
 
 ````
@@ -10,12 +13,15 @@ This will create the environment for the app and database along with the securit
 We have also added a load balancer that distributes the requests across the 3 instances of the app equally as well as an autoscaler that will create more instances when the instances meet its limits in loads.
 In the terraform we have also added an ELK stack that monitors the vitals of the instances and creates a kabana page to view the statistics.
 
+## Repositories
 
 This is the final part to the CI CD pipeline we have created. 
 The first part being the jenkins tests for the branchs for the app, db repositories. The tests are done with chef as they are chef cookbooks.
 If these passs the test, the branch is merged with the master branch.
 After the branch is merged, an image is created from the app and db repositories using packer.
-This link links to the packer repository as well as the app and db repositories. https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
+This link links to the packer repository as well as the app and db repositories.
+
+https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
 We have done the same for this repository, the code is tested in jenkins by doing these comands 
 ````
@@ -24,6 +30,7 @@ terraform validate
 ````
 We have also created jenkins jobs that creates images of the ELK stack. The repositories of each of the parks of the ELK stack are below.
 
+## Diagrams 
 
 This diagram shows the arcitecture we have created:
 
