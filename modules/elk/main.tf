@@ -14,7 +14,7 @@ resource "aws_instance" "elastic_search" {
   private_ip                  = "10.0.13.100"
   associate_public_ip_address = true
   key_name   = "charlie-poullet-eng53-homepc"
-  
+
   tags = {
     Name = "hamza-jason-Eng53-elasticsearch-${count.index + 1}"
   }

@@ -27,7 +27,7 @@ resource "aws_instance" "db_secondary" {
   key_name                    = "Hamza-ElAouane-Eng53-ire-key"
   vpc_security_group_ids      = ["${var.security_group_db}"]
   subnet_id                   = "${element(var.private_subnets, 1)}"
-  private_ip                  = "10.0.10.101"
+  private_ip                  = "10.0.11.100" #need to match ip on user script
   user_data                   = "${var.user_data_sd}"
 
   tags = {
@@ -42,7 +42,7 @@ resource "aws_instance" "db_secondary-1" {
   key_name                    = "Hamza-ElAouane-Eng53-ire-key"
   vpc_security_group_ids      = ["${var.security_group_db}"]
   subnet_id                   = "${element(var.private_subnets, 2)}"
-  private_ip                  = "10.0.10.102"
+  private_ip                  = "10.0.12.100"
   user_data                   = "${var.user_data_sd}"
 
   tags = {

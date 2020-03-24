@@ -12,7 +12,7 @@ resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
   user_data = "${var.user_data_app}"
 }
 
-#["${element(aws_subnet.public_subnet.id), 0-2}"]
+# create autoscaling group
 resource "aws_autoscaling_group" "hamza-jason-eng53-asg-1" {
   launch_configuration    = "${aws_launch_configuration.hamza-jason-eng53-config1.id}"
   vpc_zone_identifier     = ["${element(var.subnets, 0)}", "${element(var.subnets, 1)}", "${element(var.subnets, 2)}"]
