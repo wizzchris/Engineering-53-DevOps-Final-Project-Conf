@@ -64,36 +64,39 @@ In the terraform we have also added an ELK stack that monitors the vitals of the
 
 ## Repositories
 
-This is the final part to the CI CD pipeline we have created. 
-The first part being the jenkins tests for the branchs for the app, db repositories. The tests are done with chef as they are chef cookbooks.
+This is the final part to the CI/CD pipeline we have created. 
+The first part being the jenkins tests for the branchs for the app, db repositories. 
+The tests are done with chef as they are chef cookbooks.
 If these pass the test, the branch is merged with the master branch.
 After the branch is merged, an image is created from the app and db repositories using packer.
 These are the linkes for application, app cookbook, database cookbook and packer.
 
-Application: https://github.com/wizzchris/AppFolder
+Application: 		https://github.com/wizzchris/AppFolder
 
-App cookbook: https://github.com/jemurphyuk/eng53-devops-final-app-cookbook
+App cookbook: 		https://github.com/jemurphyuk/eng53-devops-final-app-cookbook
 
-Database cookbook: https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/blob/master/README.md
+Database cookbook: 	https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/blob/master/README.md
 
-Packer: https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
+Packer for application:	https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
-We have done the same for this repository, the code is tested in jenkins by doing these comands 
+We have done the same for this repository, the code is tested in jenkins by running these comands 
 ````
 terraform init
 terraform validate
 ````
 We have also created jenkins jobs that creates images of the ELK stack. The repositories of each of the parks of the ELK stack are below.
 
-elastic = https://github.com/chpoullet/eng53-elasticsearch-cookbook
+Elastic search cookbook:	https://github.com/chpoullet/eng53-elasticsearch-cookbook
 
-kibana = https://github.com/chpoullet/eng53-kibana-cookbook
+Logstash cookbook:		https://github.com/chpoullet/eng53-logstash-cookbook
 
-logstash = https://github.com/chpoullet/eng53-logstash-cookbook
+Kibana cookbook:		https://github.com/chpoullet/eng53-kibana-cookbook
 
-app filebeat/metric = https://github.com/chpoullet/beats-app-cookbook
+App filebeat/metric:		https://github.com/chpoullet/beats-app-cookbook
 
-db filebeat/metric = https://github.com/chpoullet/beats-db-cookbook
+DB filebeat/metric:		https://github.com/chpoullet/beats-db-cookbook
+
+packers repo for elk stack: 	https://github.com/AMao7/Finalproject-packer
 
 ## Diagrams 
 
