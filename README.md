@@ -107,3 +107,5 @@ This diagram shows the architecture we have created:
 This diagram shows the pipelines we have created:
 
 ![](images/eng53-pipeline.png)
+
+![](images/sparta-global.png)
