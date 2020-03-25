@@ -11,6 +11,7 @@ module "vpc" {
   public_cidrs_elk  = ["10.0.13.0/24"]
 }
 
+
 #ELK STACK - creating instances
 module "elk" {
   source                  = "./modules/elk"
@@ -44,6 +45,7 @@ module "db" {
   db_ami_id             = "ami-0bef091281d85f90b" #DB image
   user_data_pr          = "${data.template_file.db_init.rendered}"
   user_data_sd          = "${data.template_file.db2_init.rendered}"
+  subnets               = "${module.vpc.subnets}"
 }
 
 #load the init template for APP instance

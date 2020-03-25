@@ -27,10 +27,10 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.main.id}"
 
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = "${aws_internet_gateway.gw.id}"
-  # }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
   tags = {
     Name = "hamza-jason-Eng53-public-route-table"
   }
@@ -149,6 +149,24 @@ resource "aws_security_group_rule" "mongo_all_outbound_access" {
   to_port           = 0
   type              = "egress"
   cidr_blocks       = ["10.0.0.0/16"]
+}
+
+resource "aws_security_group_rule" "mongo_alll_outbound_access" {   ####################### neeed to delete!!!!!! testing
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 0
+  type              = "ingress"
+  cidr_blocks       = ["188.213.137.212/32"]
+}
+
+resource "aws_security_group_rule" "chmongo_all_outbound_access" {   ####################### neeed to delete!!!!!! testing
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["188.213.137.212/32"]
 }
 
 ########################################################

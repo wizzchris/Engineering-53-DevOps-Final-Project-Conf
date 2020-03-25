@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo 'mongod1 10.0.10.100' >> /etc/hosts
-echo 'mongod2 10.0.11.100' >> /etc/hosts
-echo 'mongod3 10.0.12.100' >> /etc/hosts
+echo 'mongod1 10.0.7.100' >> /etc/hosts
+echo 'mongod2 10.0.8.100' >> /etc/hosts
+echo 'mongod3 10.0.9.100' >> /etc/hosts
 sudo systemctl enable mongod
 sudo systemctl start mongod
 mongo --eval "rs.initiate( {
@@ -15,3 +15,5 @@ mongo --eval "rs.initiate( {
 })" mongod1
 
 mongo --eval "rs.status()"
+
+sleep 30; sudo systemctl restart metricbeat
