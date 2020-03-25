@@ -57,29 +57,29 @@ This repository contains the terraform code that will allow the user to run the 
 terraform apply
 ````
 
-This will create the environment for the app and database along with the security groups and vpcs required. They are spred acorss 3 availability zones.
-3 Instances are made for the app as well as 3 for the database. The 3 databases contain one primary and two secondary databases which act as replica sets if the primary db goes down.
-We have also added a load balancer that distributes the requests across the 3 instances of the app equally as well as an autoscaler that will create more instances when the instances meet its limits in loads.
-In the terraform we have also added an ELK stack that monitors the vitals of the instances and creates a kabana page to view the statistics.
+This will create the environment for the app and database along with the security groups and VPCs required. They located in their own unique availability zones.
+Three instances are made for the app as well as 3 for the database. The three databases contain one primary and two secondary databases which act as replica sets if the primary database goes down.
+We have also added a load balancer that distributes the requests across the app instances equally as well as an autoscaler, that will create more instances when the instances meet its limits in loads.
+In the terraform we have also added an ELK stack that monitors the vitals of the instances and creates a kibana page to view the statistics.
 
 ## Repositories
 
-This is the final part to the CI/CD pipeline we have created. 
-The first part being the jenkins tests for the branchs for the app, db repositories. 
-The tests are done with chef as they are chef cookbooks.
-If these pass the test, the branch is merged with the master branch.
+The first part of the CI/CD pipeline is the jenkins tests for the application and app and db cookbook repositories. 
+The unit tests and integration tests are done with chef commands (seen in individual repos).
+If these tests pass, the branch is merged with the master.
 After the branch is merged, an image is created from the app and db repositories using packer.
 These are the linkes for application, app cookbook, database cookbook and packer.
 
-Application: 		https://github.com/wizzchris/AppFolder
+Application:	   https://github.com/wizzchris/AppFolder
 
-App cookbook: 		https://github.com/jemurphyuk/eng53-devops-final-app-cookbook
+App cookbook:	   https://github.com/jemurphyuk/eng53-devops-final-app-cookbook
 
-Database cookbook: 	https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/blob/master/README.md
+Database cookbook: https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/blob/master/README.md
 
-Packer for application:	https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
+Packer for app/db: https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
-We have done the same for this repository, the code is tested in jenkins by running these comands 
+
+For this terraform repository, the code is tested in jenkins by running these commands: 
 ````
 terraform init
 terraform validate
