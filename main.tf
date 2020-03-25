@@ -26,7 +26,7 @@ data "aws_ami" "app" {
   owners           = ["self"]
 
   filter {
-    name   = "Name"
+    name   = "tag:Name"
     values = ["abdimalik-mao-eng53-nodejs-*"]
   }
 }
@@ -37,7 +37,7 @@ data "aws_ami" "db" {
   owners           = ["self"]
 
   filter {
-    name   = "Name"
+    name   = "tag:Name"
     values = ["abdimalik-mao-eng53-db-*"]
   }
 }
