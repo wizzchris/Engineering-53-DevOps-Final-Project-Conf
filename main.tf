@@ -22,7 +22,7 @@ data "template_file" "db2_init" {
 
 data "aws_ami" "app" {
   executable_users = ["self"]
-  most_recent      = trusted_signers
+  most_recent      = true
   owners           = ["self"]
 
   filter {
@@ -33,7 +33,7 @@ data "aws_ami" "app" {
 
 data "aws_ami" "db" {
   executable_users = ["self"]
-  most_recent      = trusted_signers
+  most_recent      = true
   owners           = ["self"]
 
   filter {
