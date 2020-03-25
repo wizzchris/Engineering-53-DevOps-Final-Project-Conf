@@ -31,14 +31,14 @@ The ELK stack is a commonly used system for this purpose. Elk is made up of Elas
 
 We would like you to create an ELK stack that monitors the changes in the state of the Mongo Replica set. If one of the DB's goes down we should see this reflected in Kibana.
 
-## Deliverables	
+## Deliverables
 - Link to all GitHub repositories for the project, they should all include a README.md that explains how to use the Repo with any dependancies included
 	- Terraform repo
 	- Application repo, including app cookbook and database cookbook repos
 	- Packer repo
 	- Logstash Configuration repo
-	- Elasticsearch 
-	- Configuration repo	
+	- Elasticsearch
+	- Configuration repo
 	- Kibana Configuraton repo
 	- Beats Configuration repos
 - Screen recoding of successful Pipeline jobs of Jenkins, this should include:-
@@ -49,7 +49,7 @@ We would like you to create an ELK stack that monitors the changes in the state 
 - Screen recording of ELK stack monitoring the Mongo replica set. If we delete the Mongo instances we should see this effect the dashboard in Kibana.
 - Demonstrate effective use of Jira and Teams with constant updates and communication through the platform between the group
 
-## Overview 
+## Overview
 Ensure terraform is installed on the jenkins slave node.
 This repository contains the terraform code that will allow the user to run the command
 
@@ -64,7 +64,7 @@ In the terraform we have also added an ELK stack that monitors the vitals of the
 
 ## Repositories
 
-The first part of the CI/CD pipeline is the jenkins tests for the application and app and db cookbook repositories. 
+The first part of the CI/CD pipeline is the jenkins tests for the application and app and db cookbook repositories.
 The unit tests and integration tests are done with chef commands (seen in individual repos).
 If these tests pass, the branch is merged with the master.
 After the branch is merged, an image is created from the app and db repositories using packer.
@@ -79,7 +79,7 @@ Database cookbook: https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/
 Packer for app/db: https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
 
-For this terraform repository, the code is tested in jenkins by running these commands: 
+For this terraform repository, the code is tested in jenkins by running these commands:
 ````
 terraform init
 terraform validate
@@ -98,10 +98,12 @@ DB filebeat/metric:		https://github.com/chpoullet/beats-db-cookbook
 
 packers repo for elk stack: 	https://github.com/chpoullet/eng53-elk-images
 
-## Diagrams 
+## Diagrams
 
 This diagram shows the architecture we have created:
 
+![](images/eng53-architecture.png)
+
 This diagram shows the pipelines we have created:
 
-
+![](images/eng53-pipeline.png)
