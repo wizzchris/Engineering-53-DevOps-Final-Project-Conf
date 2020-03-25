@@ -36,13 +36,43 @@ data "template_file" "db2_init" {
   template = "${file("./scripts/db/init2.sh.tpl")}"
 }
 
-#Building DB instances
+#referencing app and db created images from aws
+data "aws_ami" "app" {
+  executable_users = ["self"]
+  most_recent      = true
+  owners           = ["self"]
+
+  filter {
+    name   = "tag:Name"
+    values = ["abdimalik-mao-eng53-nodejs-*"]
+  }
+}
+
+data "aws_ami" "db" {
+  executable_users = ["self"]
+  most_recent      = true
+  owners           = ["self"]
+
+  filter {
+    name   = "tag:Name"
+    values = ["abdimalik-mao-eng53-db-*"]
+  }
+}
+
+module "elk" {
+  source                  = "./elk"
+  security_groups         = ["${module.vpc.security_group_elk}"]
+  vpc_id                  = "${module.vpc.aws_vpc_id}"
+  subnet_ids              = [${module.vpc.public_subnets_elk}]
+  instance_type           = "t2.small"
+}
+
 module "db" {
   source                = "./modules/db"
   instance_type         = "t2.micro"
   security_group_db     = "${module.vpc.security_group_db}"
   private_subnets       = "${module.vpc.private_subnets}"
-  db_ami_id             = "ami-05955f6f6abb0d8f8"
+  db_ami_id             = "${data.aws_ami.db.id}" #DB image
   user_data_pr          = "${data.template_file.db_init.rendered}"
   user_data_sd          = "${data.template_file.db2_init.rendered}"
   subnets               = "${module.vpc.subnets}"
@@ -53,27 +83,11 @@ data "template_file" "app_init" {
   template = "${file("./scripts/app/init.sh.tpl")}"
 }
 
-# data "aws_ami" "app_image" {
-#   most_recent = true
-#
-#   filter {
-#     name   = "name"
-#     values = ["nodejs-app"]
-#   }
-#
-#   filter {
-#     name   = "virtualization-type"
-#     values = ["hvm"]
-#   }
-#
-#   owners = ["self"]
-# }
-
 #creating Autoscaling groups
 module "Autoscaling" {
   source            = "./modules/Autoscaling"
   instance_type     = "t2.micro"
-  app_ami_id        = "ami-03def2adc81c5e142"
+  app_ami_id        = "${data.aws_ami.app.id}"
   aws_vpc_id        = "${module.vpc.aws_vpc_id}"
   subnets           = "${module.vpc.subnets}"
   user_data_app     = "${data.template_file.app_init.rendered}"
