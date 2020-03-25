@@ -71,8 +71,11 @@ After the branch is merged, an image is created from the app and db repositories
 These are the linkes for application, app cookbook, database cookbook and packer.
 
 Application: https://github.com/wizzchris/AppFolder
+
 App cookbook: https://github.com/jemurphyuk/eng53-devops-final-app-cookbook
+
 Database cookbook: https://github.com/jemurphyuk/eng53-devops-final-db-cookbook/blob/master/README.md
+
 Packer: https://github.com/wizzchris/Engineering-53-DevOps-Final-Project-AppDB
 
 We have done the same for this repository, the code is tested in jenkins by doing these comands 
