@@ -96,7 +96,7 @@ App filebeat/metric:		https://github.com/chpoullet/beats-app-cookbook
 
 DB filebeat/metric:		https://github.com/chpoullet/beats-db-cookbook
 
-packers repo for elk stack: 	https://github.com/AMao7/Finalproject-packer
+packers repo for elk stack: 	https://github.com/chpoullet/eng53-elk-images
 
 ## Diagrams 
 
