@@ -1,5 +1,4 @@
 variable "db_ami_id" {
-  default="ami-01793b684af7a3e2c"
 }
 
 variable "instance_type" {}
