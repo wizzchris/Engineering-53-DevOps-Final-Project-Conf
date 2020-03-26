@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo '127.0.0.1 localhost mongod2' > /etc/hosts
 
 echo '10.0.7.100 mongod1' >> /etc/hosts

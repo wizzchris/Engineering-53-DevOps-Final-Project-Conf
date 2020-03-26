@@ -8,4 +8,5 @@ echo '10.0.9.100 mongod3' >> /etc/hosts
 sudo systemctl enable mongod
 sudo systemctl start mongod
 
+
 sleep 60; sudo systemctl restart metricbeat
