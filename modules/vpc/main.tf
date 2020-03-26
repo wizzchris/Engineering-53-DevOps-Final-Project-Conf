@@ -169,6 +169,24 @@ resource "aws_security_group_rule" "chmongo_all_outbound_access" {   ###########
   cidr_blocks       = ["188.213.137.212/32"]
 }
 
+resource "aws_security_group_rule" "mongofb_alll_outbound_access" {   ####################### neeed to delete!!!!!! testing
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 0
+  type              = "ingress"
+  cidr_blocks       = ["86.164.234.169/32"]
+}
+
+resource "aws_security_group_rule" "chmghongo_all_outbound_access" {   ####################### neeed to delete!!!!!! testing
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["86.164.234.169/32"]
+}
+
 ########################################################
 
 #### SG for elasticsearch and logstack

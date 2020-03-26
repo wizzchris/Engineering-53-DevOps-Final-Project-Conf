@@ -4,12 +4,12 @@ provider "aws" {
 
 # config launch configutations
 resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
-  image_id              = "${var.app_ami_id}"
-  instance_type         = "${var.instance_type}"
-  security_groups = ["${aws_security_group.launch-config-asg-sg.id}"]
+  image_id                    = "${var.app_ami_id}"
+  instance_type               = "${var.instance_type}"
+  security_groups             = ["${aws_security_group.launch-config-asg-sg.id}"]
   associate_public_ip_address = true
-  key_name   = "charlie-poullet-eng53-homepc"
-  user_data = "${var.user_data_app}"
+  key_name                    = "charlie-poullet-eng53-homepc"
+  user_data                   = "${var.user_data_app}"
 }
 
 # create autoscaling group
@@ -55,7 +55,15 @@ resource "aws_security_group_rule" "asg_inbound_http" {
     security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
     cidr_blocks = ["188.213.137.212/32"]
 }
-
+### myself
+resource "aws_security_group_rule" "ascfdg_inbound_http" {
+    type = "ingress"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
+    cidr_blocks = ["86.164.234.169/32"]
+}
 
 resource "aws_security_group_rule" "outbound_all" {
     type = "egress"
