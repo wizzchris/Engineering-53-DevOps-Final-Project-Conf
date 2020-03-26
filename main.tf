@@ -36,35 +36,8 @@ data "template_file" "db2_init" {
   template = "${file("./scripts/db/init2.sh.tpl")}"
 }
 
-#referencing app and db created images from aws
-data "aws_ami" "app" {
-  executable_users = ["self"]
-  most_recent      = true
-  owners           = ["self"]
-
-  filter {
-    name   = "tag:Name"
-    values = ["abdimalik-mao-eng53-nodejs-*"]
-  }
-}
-
-data "aws_ami" "db" {
-  executable_users = ["self"]
-  most_recent      = true
-  owners           = ["self"]
-
-  filter {
-    name   = "tag:Name"
-    values = ["abdimalik-mao-eng53-db-*"]
-  }
-}
-
-module "elk" {
-  source                  = "./elk"
-  security_groups         = ["${module.vpc.security_group_elk}"]
-  vpc_id                  = "${module.vpc.aws_vpc_id}"
-  subnet_ids              = [${module.vpc.public_subnets_elk}]
-  instance_type           = "t2.small"
+data "template_file" "db3_init" {
+  template = "${file("./scripts/db/init3.sh.tpl")}"
 }
 
 module "db" {
@@ -72,10 +45,13 @@ module "db" {
   instance_type         = "t2.micro"
   security_group_db     = "${module.vpc.security_group_db}"
   private_subnets       = "${module.vpc.private_subnets}"
-  db_ami_id             = "${data.aws_ami.db.id}" #DB image
+  #db_ami_id             = "${data.aws_ami.db.id}" #DB image
+  db_ami_id             = "ami-05955f6f6abb0d8f8"
   user_data_pr          = "${data.template_file.db_init.rendered}"
   user_data_sd          = "${data.template_file.db2_init.rendered}"
-  subnets               = "${module.vpc.subnets}"
+  user_data_sd2         = "${data.template_file.db3_init.rendered}"
+  subnets               = "${module.vpc.subnets}"   ############# to delete after
+  kn                    = "${module.elk.kn}"
 }
 
 #load the init template for APP instance
@@ -87,7 +63,8 @@ data "template_file" "app_init" {
 module "Autoscaling" {
   source            = "./modules/Autoscaling"
   instance_type     = "t2.micro"
-  app_ami_id        = "${data.aws_ami.app.id}"
+  #app_ami_id        = "${data.aws_ami.app.id     ### to get automatically
+  app_ami_id        = "ami-0356a367972e89ef9"
   aws_vpc_id        = "${module.vpc.aws_vpc_id}"
   subnets           = "${module.vpc.subnets}"
   user_data_app     = "${data.template_file.app_init.rendered}"

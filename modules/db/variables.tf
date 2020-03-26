@@ -23,3 +23,11 @@ variable "user_data_sd" {
   description=""
   default=""
 }
+
+variable "user_data_sd2" {
+  description=""
+  default=""
+}
+
+variable "kn" {
+}

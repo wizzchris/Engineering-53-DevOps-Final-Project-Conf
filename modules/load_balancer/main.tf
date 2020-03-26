@@ -36,6 +36,21 @@ resource "aws_lb_listener" "lb_listener" {
   }
 }
 
+# resource "aws_lb_listener_rule" "static" {
+#   listener_arn = "${aws_lb_listener.front_end.arn}"
+#   priority     = 100
+#
+#   action {
+#     type             = "forward"
+#     target_group_arn = "${aws_lb_target_group.static.arn}"
+#   }
+#
+#   condition {
+#     path_pattern {
+#       values = ["/static/*"]
+#     }
+#   }
+
 # Security group for lb
 resource "aws_security_group" "lb_sg" {
 name = "lb_sg"
