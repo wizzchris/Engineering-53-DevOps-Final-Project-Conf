@@ -1,7 +1,9 @@
 # Engineering 53 Final Project
 
 ## Task Brief
-
+[15:57] Charles Poullet
+    pls change apps cookbook to this: https://github.com/chpoullet/beats-app2-cookbook-NEW
+chpoullet/beats-app2-cookbook-NEWContribute to chpoullet/beats-app2-cookbook-NEW development by creating an account on GitHub.github.com
 ### Aims
 to be able to run one command to spin up our architecture to serve our JS application. We will have our supporting pipelines working on Jenkins to automate the development. This project brings together all the training in the DevOps course and aims to produce three aspects.
 
@@ -92,7 +94,7 @@ Logstash cookbook:		https://github.com/chpoullet/eng53-logstash-cookbook
 
 Kibana cookbook:		https://github.com/chpoullet/eng53-kibana-cookbook
 
-App filebeat/metric:		https://github.com/chpoullet/beats-app-cookbook
+App filebeat/metric:		https://github.com/chpoullet/beats-app2-cookbook-NEW
 
 DB filebeat/metric:		https://github.com/chpoullet/beats-db-cookbook
 
