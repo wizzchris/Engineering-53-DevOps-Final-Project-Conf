@@ -101,6 +101,13 @@ resource "aws_route_table_association" "public_subnet_assoc" {
    depends_on = ["aws_default_route_table.private_route_table", "aws_subnet.private_subnet"]
  }
 
+ resource "aws_route_table_association" "public_subnet_elk_assoc" {
+   count = 1
+   route_table_id = "${aws_route_table.public_route_table.id}"
+   subnet_id = "${aws_subnet.public_subnet_elk.*.id[count.index]}"
+   depends_on = ["aws_route_table.public_route_table", "aws_subnet.public_subnet_elk"]
+ }
+
 ########################################################
 
 ## SG for DB
@@ -129,7 +136,7 @@ resource "aws_security_group_rule" "mongo_all_outbound_access" {
   cidr_blocks       = ["10.0.7.0/24"]
 }
 
-resource "aws_security_group_rule" "mongo_all_outbound_access" {
+resource "aws_security_group_rule" "mongo_all_outbound_access_1" {
   from_port         = 27017
   protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_db.id}"
@@ -138,7 +145,7 @@ resource "aws_security_group_rule" "mongo_all_outbound_access" {
   cidr_blocks       = ["10.0.8.0/24"]
 }
 
-resource "aws_security_group_rule" "mongo_all_outbound_access" {
+resource "aws_security_group_rule" "mongo_all_outbound_access_2" {
   from_port         = 27017
   protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_db.id}"
@@ -147,7 +154,41 @@ resource "aws_security_group_rule" "mongo_all_outbound_access" {
   cidr_blocks       = ["10.0.9.0/24"]
 }
 
+resource "aws_security_group_rule" "mongo_outbound_access_primary" {
+  from_port         = 27017
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 27017
+  type              = "egress"
+  cidr_blocks       = ["10.0.10.0/24"]
+}
 
+resource "aws_security_group_rule" "mongo_outbound_access_secondary_1" {
+  from_port         = 27017
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 27017
+  type              = "egress"
+  cidr_blocks       = ["10.0.11.0/24"]
+}
+
+resource "aws_security_group_rule" "mongo_outbound_access_secondary_2" {
+  from_port         = 27017
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 27017
+  type              = "egress"
+  cidr_blocks       = ["10.0.12.0/24"]
+}
+
+resource "aws_security_group_rule" "mongo_outbound_access_kibana" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 65535
+  type              = "egress"
+  cidr_blocks       = ["10.0.13.0/24"]
+}
 
 ########################################################
 
