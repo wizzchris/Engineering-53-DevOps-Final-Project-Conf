@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_lb" "lb" {
     name               = "hamza-jason-eng53-lb"
     internal           = false
-   load_balancer_type = "application"
+   load_balancer_type = "application"     
    subnets            =  "${var.subnets}"
    security_groups = ["${aws_security_group.lb_sg.id}"]
  }
@@ -35,21 +35,6 @@ resource "aws_lb_listener" "lb_listener" {
     target_group_arn = "${aws_lb_target_group.tg1.arn}"
   }
 }
-
-# resource "aws_lb_listener_rule" "static" {
-#   listener_arn = "${aws_lb_listener.front_end.arn}"
-#   priority     = 100
-#
-#   action {
-#     type             = "forward"
-#     target_group_arn = "${aws_lb_target_group.static.arn}"
-#   }
-#
-#   condition {
-#     path_pattern {
-#       values = ["/static/*"]
-#     }
-#   }
 
 # Security group for lb
 resource "aws_security_group" "lb_sg" {

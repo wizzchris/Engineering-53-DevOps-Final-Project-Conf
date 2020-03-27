@@ -41,8 +41,6 @@ resource "aws_route_table" "public_route_table" {
   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
 
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.gw.id}"
   }
   tags = {
     Name = "hamza-jason-Eng53-private-route-table"
@@ -113,79 +111,43 @@ resource "aws_security_group" "sg_db" {
   vpc_id = "${aws_vpc.main.id}"
 }
 
-# Ingress Security Group Port 22
-# resource "aws_security_group_rule" "ssh_inbound_access" {  ########## at end remove !!!!!!!!!
-#   from_port         = 22
-#   protocol          = "tcp"
-#   security_group_id = "${aws_security_group.sg_db.id}"
-#   to_port           = 22
-#   type              = "ingress"
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
-
-# resource "aws_security_group_rule" "http_inbound_access" {
-#   from_port         = 80
-#   protocol          = "tcp"
-#   security_group_id = "${aws_security_group.sg_db.id}"
-#   to_port           = 80
-#   type              = "ingress"
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
-
 resource "aws_security_group_rule" "mongod_inbound_access" {
+  from_port         = 1024
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.sg_db.id}"
+  to_port           = 65535
+  type              = "ingress"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+resource "aws_security_group_rule" "mongo_all_outbound_access" {
   from_port         = 27017
   protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_db.id}"
   to_port           = 27017
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
+  type              = "egress"
+  cidr_blocks       = ["10.0.7.0/24"]
 }
 
-#All outbound access
 resource "aws_security_group_rule" "mongo_all_outbound_access" {
-  from_port         = 0
-  protocol          = "-1"
+  from_port         = 27017
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_db.id}"
-  to_port           = 0
+  to_port           = 27017
   type              = "egress"
-  cidr_blocks       = ["10.0.0.0/16"]
+  cidr_blocks       = ["10.0.8.0/24"]
 }
 
-resource "aws_security_group_rule" "mongo_alll_outbound_access" {   ####################### neeed to delete!!!!!! testing
-  from_port         = 0
-  protocol          = "-1"
+resource "aws_security_group_rule" "mongo_all_outbound_access" {
+  from_port         = 27017
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_db.id}"
-  to_port           = 0
-  type              = "ingress"
-  cidr_blocks       = ["188.213.137.212/32"]
-}
-
-resource "aws_security_group_rule" "chmongo_all_outbound_access" {   ####################### neeed to delete!!!!!! testing
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = "${aws_security_group.sg_db.id}"
-  to_port           = 0
+  to_port           = 27017
   type              = "egress"
-  cidr_blocks       = ["188.213.137.212/32"]
+  cidr_blocks       = ["10.0.9.0/24"]
 }
 
-resource "aws_security_group_rule" "mongofb_alll_outbound_access" {   ####################### neeed to delete!!!!!! testing
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = "${aws_security_group.sg_db.id}"
-  to_port           = 0
-  type              = "ingress"
-  cidr_blocks       = ["86.164.234.169/32"]
-}
 
-resource "aws_security_group_rule" "chmghongo_all_outbound_access" {   ####################### neeed to delete!!!!!! testing
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = "${aws_security_group.sg_db.id}"
-  to_port           = 0
-  type              = "egress"
-  cidr_blocks       = ["86.164.234.169/32"]
-}
 
 ########################################################
 
@@ -210,6 +172,15 @@ resource "aws_security_group_rule" "el_eph_outbound_access" {
   protocol          = "tcp"
   security_group_id = "${aws_security_group.sg_el.id}"
   to_port           = 65535
+  type              = "egress"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+resource "aws_security_group_rule" "el__eph_outbound_access" {
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.sg_el.id}"
+  to_port           = 0
   type              = "egress"
   cidr_blocks       = ["10.0.0.0/16"]
 }

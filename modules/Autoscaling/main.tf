@@ -8,7 +8,7 @@ resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
   instance_type               = "${var.instance_type}"
   security_groups             = ["${aws_security_group.launch-config-asg-sg.id}"]
   associate_public_ip_address = true
-  key_name                    = "charlie-poullet-eng53-homepc"
+  key_name                    = "eng53-project-nodejs-mongo"
   user_data                   = "${var.user_data_app}"
 }
 
@@ -31,7 +31,6 @@ resource "aws_autoscaling_group" "hamza-jason-eng53-asg-1" {
   }
 }
 
-
 resource "aws_security_group" "launch-config-asg-sg" {
     name = "launch-config-asg-sg"
     vpc_id = "${var.aws_vpc_id}"
@@ -46,30 +45,30 @@ resource "aws_security_group_rule" "inbound_http" {
     cidr_blocks = ["0.0.0.0/0"]
 }
 
-#### to delete
-resource "aws_security_group_rule" "asg_inbound_http" {
+resource "aws_security_group_rule" "eph_inbound_http" {
     type = "ingress"
-    from_port = 22
-    to_port = 22
+    from_port = 1024
+    to_port = 65535
     protocol = "tcp"
     security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
-    cidr_blocks = ["188.213.137.212/32"]
-}
-### myself
-resource "aws_security_group_rule" "ascfdg_inbound_http" {
-    type = "ingress"
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
-    cidr_blocks = ["86.164.234.169/32"]
+    cidr_blocks = ["10.0.0.0/16"]
 }
 
-resource "aws_security_group_rule" "outbound_all" {
-    type = "egress"
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+resource "aws_security_group_rule" "inbound_http_port" {
+    type = "ingress"
+    from_port = 3000
+    to_port = 3000
+    protocol = "tcp"
     security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
     cidr_blocks = ["0.0.0.0/0"]
+}
+
+#All outbound access
+resource "aws_security_group_rule" "all_outbound_access" {
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.launch-config-asg-sg.id}"
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
