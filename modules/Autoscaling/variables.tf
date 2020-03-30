@@ -14,5 +14,4 @@ variable "subnets" {
 
 variable "user_data_app" {
   description=""
-  default=""
 }

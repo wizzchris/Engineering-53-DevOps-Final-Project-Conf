@@ -1,12 +1,14 @@
 #!/bin/bash
 
+sleep 30
 cd /home/ubuntu/AppFolder/app
 
-export DB_HOST='mongodb://mongod1:27017,mongodb://mongod2:27017,mongodb://mongod3:27017/posts?replicaSet=r0'
+export DB_HOST=mongodb://10.0.10.100:27017,10.0.11.100:27017,10.0.12.100:27017/posts?replicaSet=rs0
+
 
 sudo npm install
-sudo npm start
+node seeds/seed.js
 
-echo DB_HOST='mongodb://mongod1:27017,mongodb://mongod2:27017,mongodb://mongod3:27017/posts?replicaSet=r0'
+sudo npm start &
 
 sudo filebeat modules enable nginx

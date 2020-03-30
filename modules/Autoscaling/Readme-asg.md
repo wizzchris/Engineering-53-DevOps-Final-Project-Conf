@@ -3,7 +3,7 @@
 To make the application *highly available* and have redundancies across all 3 availability zones. When we distribute the instances across the other
 availibility zones, if 1 fail, the other instances in the other availability zones can handle the request.
 
-## Load Balancer and autoscaling group for this 2 tier architecture
+## Load Balancer and Autoscaling Group for this 2 tier architecture
 
 ### Autoscaling
 Amazon EC2 Auto Scaling helps you ensure that you have the correct number of Amazon EC2 instances available to handle the load for your application. You create collections of EC2 instances, called Auto Scaling groups. Before you can launch your Auto Scaling instances in a new VPC, you must *first create your VPC environment*. After you create your VPC and subnets, you launch Auto Scaling instances within the subnets.

@@ -3,6 +3,7 @@ provider "aws" {
 }
 
 #Builds VPC, Subnets, and SG
+
 module "vpc" {
   source            = "./modules/vpc"
   vpc_cidr          = "10.0.0.0/16"
@@ -36,22 +37,14 @@ data "template_file" "db2_init" {
   template = "${file("./scripts/db/init2.sh.tpl")}"
 }
 
-data "template_file" "db3_init" {
-  template = "${file("./scripts/db/init3.sh.tpl")}"
-}
-
 module "db" {
   source                = "./modules/db"
   instance_type         = "t2.micro"
   security_group_db     = "${module.vpc.security_group_db}"
   private_subnets       = "${module.vpc.private_subnets}"
-  #db_ami_id             = "${data.aws_ami.db.id}" #DB image
   db_ami_id             = "ami-05955f6f6abb0d8f8"
   user_data_pr          = "${data.template_file.db_init.rendered}"
   user_data_sd          = "${data.template_file.db2_init.rendered}"
-  user_data_sd2         = "${data.template_file.db3_init.rendered}"
-  subnets               = "${module.vpc.subnets}"   ############# to delete after
-  kn                    = "${module.elk.kn}"
 }
 
 #load the init template for APP instance
@@ -63,8 +56,7 @@ data "template_file" "app_init" {
 module "Autoscaling" {
   source            = "./modules/Autoscaling"
   instance_type     = "t2.micro"
-  #app_ami_id        = "${data.aws_ami.app.id     ### to get automatically
-  app_ami_id        = "ami-0356a367972e89ef9"
+  app_ami_id        = "ami-02c5e74dcc166cf0d"
   aws_vpc_id        = "${module.vpc.aws_vpc_id}"
   subnets           = "${module.vpc.subnets}"
   user_data_app     = "${data.template_file.app_init.rendered}"
