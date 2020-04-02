@@ -39,8 +39,9 @@ resource "aws_route_table" "public_route_table" {
  #Private Route table
  resource "aws_default_route_table" "private_route_table" {
   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
-
   route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
   }
   tags = {
     Name = "hamza-jason-Eng53-private-route-table"

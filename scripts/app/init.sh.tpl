@@ -1,13 +1,19 @@
 #!/bin/bash
 
-sleep 30
+sleep 200
+echo 'export DB_HOST=mongodb://10.0.10.100:27017,10.0.11.100:27017,10.0.12.100:27017/posts?replicaSet=rs0' >> .bashrc
+
 cd /home/ubuntu/AppFolder/app
 
 export DB_HOST=mongodb://10.0.10.100:27017,10.0.11.100:27017,10.0.12.100:27017/posts?replicaSet=rs0
 
+echo $DB_HOST
 
-sudo npm install
 node seeds/seed.js
+
+
+sleep 200
+
 
 sudo npm start &
 

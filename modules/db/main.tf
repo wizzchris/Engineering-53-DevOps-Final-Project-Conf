@@ -13,6 +13,7 @@ resource "aws_instance" "db_primary" {
   subnet_id                   = "${element(var.private_subnets, count.index)}"
   private_ip                  = "10.0.10.100"
   user_data                   = "${var.user_data_pr}"
+  key_name                    = "ChristopherRogers-Eng53-Key"
 
   tags = {
     Name = "hamza-jason-Eng53-db_primary-${count.index + 1}"
@@ -27,6 +28,7 @@ resource "aws_instance" "db_secondary-1" {
   subnet_id                   = "${element(var.private_subnets, 1)}"
   private_ip                  = "10.0.11.100"
   user_data                   = "${var.user_data_sd}"
+  key_name                    = "ChristopherRogers-Eng53-Key"
 
   tags = {
     Name = "hamza-jason-Eng53-db_secondary-1"
@@ -41,6 +43,7 @@ resource "aws_instance" "db_secondary-2" {
   subnet_id                   = "${element(var.private_subnets, 2)}"
   private_ip                  = "10.0.12.100"
   user_data                   = "${var.user_data_sd}"
+  key_name                    = "ChristopherRogers-Eng53-Key"
 
 
   tags = {

@@ -56,7 +56,7 @@ data "template_file" "app_init" {
 module "Autoscaling" {
   source            = "./modules/Autoscaling"
   instance_type     = "t2.micro"
-  app_ami_id        = "ami-02c5e74dcc166cf0d"
+  app_ami_id        = "ami-0fd2d314df9396d62"
   aws_vpc_id        = "${module.vpc.aws_vpc_id}"
   subnets           = "${module.vpc.subnets}"
   user_data_app     = "${data.template_file.app_init.rendered}"
