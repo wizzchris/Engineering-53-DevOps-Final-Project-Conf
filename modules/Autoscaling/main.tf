@@ -8,12 +8,8 @@ resource "aws_launch_configuration" "hamza-jason-eng53-config1" {
   instance_type               = "${var.instance_type}"
   security_groups             = ["${aws_security_group.launch-config-asg-sg.id}"]
   associate_public_ip_address = true
-  key_name                    = "ChristopherRogers-Eng53-Key"
+  key_name                    = "eng53-project-nodejs-mongo"
   user_data                   = "${var.user_data_app}"
-
-  provisioner "local-exec" {
-    command = "echo 'export DB_HOST=mongodb://10.0.10.100:27017,10.0.11.100:27017,10.0.12.100:27017/posts?replicaSet=rs0' >> .bashrc"
-    }
 }
 
 # create autoscaling group
